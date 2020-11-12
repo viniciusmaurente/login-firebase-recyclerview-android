@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Desafio4all" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/text_ligth_blue</item>
         <item name="colorPrimaryVariant">@color/color_bg_blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
