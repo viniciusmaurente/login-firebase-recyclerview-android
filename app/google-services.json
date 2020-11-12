@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "551104824331",
+    "firebase_url": "https://desafio-4all.firebaseio.com",
+    "project_id": "desafio-4all",
+    "storage_bucket": "desafio-4all.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551104824331:android:3a06a414f03a2af6f9b30e",
+        "android_client_info": {
+          "package_name": "com.br.desafio4all"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551104824331-hqtsafrqevf8g3d32qvvo4amebjk5h6u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.br.desafio4all",
+            "certificate_hash": "9615c54f423870ffa3193a60b68448d2b5fca95f"
+          }
+        },
+        {
+          "client_id": "551104824331-rbjnpht7biq75p960qqgl43psobti466.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKWGj4ICurlVfqorwp0hHONEEhXguIrRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551104824331-rbjnpht7biq75p960qqgl43psobti466.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
