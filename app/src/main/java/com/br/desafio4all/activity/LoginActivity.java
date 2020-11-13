@@ -75,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void validarLogin( Usuario usuario ){
-
         progressBar.setVisibility( View.VISIBLE );
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
@@ -85,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
         ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
                 if ( task.isSuccessful() ){
                     progressBar.setVisibility( View.GONE );
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -96,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility( View.GONE );
                 }
-
             }
         });
     }
@@ -107,16 +104,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void inicializarComponentes(){
-
         campoEmail   = findViewById(R.id.editLoginEmail);
         campoSenha   = findViewById(R.id.editLoginSenha);
         botaoEntrar  = findViewById(R.id.buttonEntrar);
         progressBar  = findViewById(R.id.progressLogin);
 
         campoEmail.requestFocus();
-
     }
 }
-
 
 //create by vinicius vasconcelos maurente - viniciusvmaurente@gmail.com

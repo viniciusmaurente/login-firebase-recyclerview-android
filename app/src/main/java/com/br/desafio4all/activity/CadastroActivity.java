@@ -32,7 +32,6 @@ public class CadastroActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +47,6 @@ public class CadastroActivity extends AppCompatActivity {
                 String textoNome = campoNome.getText().toString();
                 String textoEmail = campoEmail.getText().toString();
                 String textoSenha = campoSenha.getText().toString();
-
                 if (!textoNome.isEmpty()) {
                     if (!textoEmail.isEmpty()) {
                         if (!textoSenha.isEmpty()) {
@@ -57,7 +55,6 @@ public class CadastroActivity extends AppCompatActivity {
                             usuario.setEmail(textoEmail);
                             usuario.setSenha(textoSenha);
                             cadastrar(usuario);
-
                         } else {
                             Toast.makeText(CadastroActivity.this,
                                     "Preencha a senha!",
@@ -93,18 +90,14 @@ public class CadastroActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             progressBar.setVisibility(View.GONE);
                             Toast.makeText(CadastroActivity.this,
                                     "Cadastro com sucesso!",
                                     Toast.LENGTH_SHORT).show();
-
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
-
                         } else {
                             progressBar.setVisibility(View.GONE);
-
                             String erroExcecao = "";
                             try {
                                 throw task.getException();
@@ -125,9 +118,7 @@ public class CadastroActivity extends AppCompatActivity {
                     }
                 }
         );
-
     }
-
 
     public void inicializarComponentes() {
         campoNome = findViewById(R.id.editCadastroNome);
