@@ -54,7 +54,7 @@
         android:background="@drawable/background_caixa_texto"
         android:ems="10"
         android:hint="E-mail"
-        android:inputType="textPersonName|textEmailAddress"
+        android:inputType="none|textEmailAddress"
         android:padding="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
