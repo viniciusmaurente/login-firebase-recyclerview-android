@@ -65,6 +65,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         textNomePerfil.setText( usuarioPerfil.getDisplayName() );
         textEmailPerfil.setText( usuarioPerfil.getEmail() );
 
+
         Uri url = usuarioPerfil.getPhotoUrl();
         if (url != null){
             Glide.with(EditarPerfilActivity.this)
@@ -85,6 +86,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
                 UsuarioFirebase.atualizarNomeUsuario(nomeAtualizado);
                 usuarioLogado.setNome(nomeAtualizado);
                 usuarioLogado.atualizar();
+                finish();
 
                 Toast.makeText(EditarPerfilActivity.this,
                         "Dados alterados com sucesso!",
@@ -160,7 +162,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
                                 }
                             });
 
-
+                            finish();
 
                             Toast.makeText(EditarPerfilActivity.this,
                                     "Sucesso ao fazer upload da imagem!",
@@ -186,6 +188,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         Toast.makeText(EditarPerfilActivity.this,
                 "Sua foto foi atualizada!",
                 Toast.LENGTH_SHORT).show();
+        finish();
 
     }
 
