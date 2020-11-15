@@ -10,13 +10,19 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.ListFragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.br.desafio4all.R;
 import com.br.desafio4all.adapter.ViewPagerAdapter;
 import com.br.desafio4all.fragment.EventosFragment;
 import com.br.desafio4all.fragment.PerfilFragment;
+import com.br.desafio4all.util.ConfiguracaoFirebase;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private EventosFragment eventosFragment;
     private PerfilFragment perfilFragment;
 
+    private FirebaseAuth autenticacao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
 
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
@@ -50,7 +61,35 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
         viewPagerAdapter.addFragment(eventosFragment, "Eventos");
         viewPagerAdapter.addFragment(perfilFragment, "Perfil");
+
         viewPager.setAdapter(viewPagerAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_sair :
+                deslogarUsuario();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deslogarUsuario(){
+        try {
+            autenticacao.signOut();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -84,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             return fragmentTitle.get(position);
         }
     }
+
 }
 
 //create by vinicius vasconcelos maurente - viniciusvmaurente@gmail.com

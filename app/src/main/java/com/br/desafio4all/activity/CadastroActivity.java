@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.br.desafio4all.R;
 import com.br.desafio4all.model.Usuario;
 import com.br.desafio4all.util.ConfiguracaoFirebase;
+import com.br.desafio4all.util.UsuarioFirebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,46 +40,55 @@ public class CadastroActivity extends AppCompatActivity {
 
         inicializarComponentes();
 
-        //cadastro usuario
+        //Cadastrar usuario
         progressBar.setVisibility(View.GONE);
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String textoNome = campoNome.getText().toString();
+            public void onClick(View v) {
+
+                String textoNome  = campoNome.getText().toString();
                 String textoEmail = campoEmail.getText().toString();
-                String textoSenha = campoSenha.getText().toString();
-                if (!textoNome.isEmpty()) {
-                    if (!textoEmail.isEmpty()) {
-                        if (!textoSenha.isEmpty()) {
+                String textosenha = campoSenha.getText().toString();
+
+                if( !textoNome.isEmpty() ){
+                    if( !textoEmail.isEmpty() ){
+                        if( !textosenha.isEmpty() ){
+
                             usuario = new Usuario();
-                            usuario.setNome(textoNome);
-                            usuario.setEmail(textoEmail);
-                            usuario.setSenha(textoSenha);
-                            cadastrar(usuario);
-                        } else {
+                            usuario.setNome( textoNome );
+                            usuario.setEmail( textoEmail );
+                            usuario.setSenha( textosenha );
+                            cadastrar( usuario );
+
+                        }else{
                             Toast.makeText(CadastroActivity.this,
                                     "Preencha a senha!",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
-                    } else {
+                    }else{
                         Toast.makeText(CadastroActivity.this,
-                                "Preencha o e-mail!",
-                                Toast.LENGTH_LONG).show();
+                                "Preencha o email!",
+                                Toast.LENGTH_SHORT).show();
                     }
-                } else {
+                }else{
                     Toast.makeText(CadastroActivity.this,
                             "Preencha o nome!",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         });
+
+
     }
 
     /**
      * Método responsável por cadastrar usuário com e-mail e senha
      * e fazer validações ao fazer o cadastro
      */
-    public void cadastrar(Usuario usuario) {
+    public void cadastrar(final Usuario usuario){
+
         progressBar.setVisibility(View.VISIBLE);
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.createUserWithEmailAndPassword(
@@ -89,43 +99,71 @@ public class CadastroActivity extends AppCompatActivity {
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(CadastroActivity.this,
-                                    "Cadastro com sucesso!",
-                                    Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                            finish();
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            String erroExcecao = "";
+
+                        if( task.isSuccessful() ){
+
                             try {
-                                throw task.getException();
-                            } catch (FirebaseAuthWeakPasswordException e) {
-                                erroExcecao = "Digite uma senha mais forte!";
-                            } catch (FirebaseAuthInvalidCredentialsException e) {
-                                erroExcecao = "Por favor, digite um e-mail válido.";
-                            } catch (FirebaseAuthUserCollisionException e) {
-                                erroExcecao = "Esta conta já foi cadastrada.";
-                            } catch (Exception e) {
-                                erroExcecao = "ao cadastrar usuário: " + e.getMessage();
+
+                                progressBar.setVisibility(View.GONE);
+
+                                //Salvar dados no firebase
+                                String idUsuario = task.getResult().getUser().getUid();
+                                usuario.setId( idUsuario );
+                                usuario.salvar();
+
+                                //Salvar dados no profile do Firebase
+                                UsuarioFirebase.atualizarNomeUsuario( usuario.getNome() );
+
+                                Toast.makeText(CadastroActivity.this,
+                                        "Cadastro com sucesso",
+                                        Toast.LENGTH_SHORT).show();
+
+                                startActivity( new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
+
+                            }catch (Exception e){
                                 e.printStackTrace();
                             }
+
+
+
+                        }else {
+
+                            progressBar.setVisibility( View.GONE );
+
+                            String erroExcecao = "";
+                            try{
+                                throw task.getException();
+                            }catch (FirebaseAuthWeakPasswordException e){
+                                erroExcecao = "Digite uma senha mais forte!";
+                            }catch (FirebaseAuthInvalidCredentialsException e){
+                                erroExcecao = "Por favor, digite um e-mail válido";
+                            }catch (FirebaseAuthUserCollisionException e){
+                                erroExcecao = "Este conta já foi cadastrada";
+                            } catch (Exception e) {
+                                erroExcecao = "ao cadastrar usuário: "  + e.getMessage();
+                                e.printStackTrace();
+                            }
+
                             Toast.makeText(CadastroActivity.this,
-                                    "Erro: " + erroExcecao,
-                                    Toast.LENGTH_LONG).show();
+                                    "Erro: " + erroExcecao ,
+                                    Toast.LENGTH_SHORT).show();
+
+
                         }
+
                     }
                 }
         );
+
     }
 
     public void inicializarComponentes() {
-        campoNome = findViewById(R.id.editCadastroNome);
-        campoEmail = findViewById(R.id.editCadastroEmail);
-        campoSenha = findViewById(R.id.editCadastroSenha);
-        botaoCadastrar = findViewById(R.id.buttonCadastrar);
-        progressBar = findViewById(R.id.progressCadastro);
+        campoNome       = findViewById(R.id.editCadastroNome);
+        campoEmail      = findViewById(R.id.editCadastroEmail);
+        campoSenha      = findViewById(R.id.editCadastroSenha);
+        botaoCadastrar  = findViewById(R.id.buttonCadastrar);
+        progressBar     = findViewById(R.id.progressCadastro);
 
         campoNome.requestFocus();
     }
