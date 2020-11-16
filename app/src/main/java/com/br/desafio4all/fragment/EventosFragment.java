@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,71 +15,74 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.br.desafio4all.R;
+import com.br.desafio4all.activity.EditarPerfilActivity;
 import com.br.desafio4all.activity.EventoActivity;
+import com.br.desafio4all.model.Evento;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EventosFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class EventosFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public EventosFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EventosFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EventosFragment newInstance(String param1, String param2) {
-        EventosFragment fragment = new EventosFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     EditText inputSearch;
     RecyclerView recyclerView;
     FloatingActionButton floatingBtn;
+    FirebaseRecyclerOptions<Evento> options;
+    FirebaseRecyclerAdapter<Evento, MyViewHolder> adapter;
+    DatabaseReference DataRef;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
 
             inputSearch     = inputSearch.findViewById(R.id.inputSearch);
             recyclerView    = recyclerView.findViewById(R.id.recyclerView);
             floatingBtn     = floatingBtn.findViewById(R.id.floatingBtn);
-            //recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+            LoadData();
+
             floatingBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getApplicationContext(), EventoActivity.class));
+                    Intent i = new Intent(getActivity(), EditarPerfilActivity.class);
+                    startActivity(i);
                 }
+
             });
         }
     }
+
+    private void LoadData() {
+        options = new FirebaseRecyclerOptions.Builder<Evento>().setQuery(DataRef, Evento.class).build();
+        adapter = new FirebaseRecyclerAdapter<Evento, MyViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Evento model) {
+                holder.textView.setText(model.getEventoNome());
+
+                Picasso.get().load(model.getImageUrl()).into(holder.imageView);
+
+            }
+
+            @NonNull
+            @Override
+            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.detalhes_evento,parent, false);
+
+                return new MyViewHolder(v);
+            }
+        };
+        adapter.startListening();
+        recyclerView.setAdapter(adapter);
+
+
+    }
+
 
     private Context getApplicationContext() {
         return null;

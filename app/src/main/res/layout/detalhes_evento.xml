@@ -12,6 +12,7 @@
         android:scaleType="centerCrop"/>
 
     <TextView
+        android:id="@+id/textView_single_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Evento"
