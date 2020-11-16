@@ -41,6 +41,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private TextView textEmailPerfil;
     private TextInputLayout textInputCpf;
     private Button buttonEditarFoto;
+    private Button btnInserirEvento;
     private Usuario usuarioLogado;
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageRef;
@@ -105,7 +106,9 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
             }
         });
+
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

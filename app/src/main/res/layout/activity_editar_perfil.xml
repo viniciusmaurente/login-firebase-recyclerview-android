@@ -33,9 +33,9 @@
         android:layout_width="133dp"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="248dp"
+        android:layout_marginTop="250dp"
         android:hint="Nome"
-        android:textColor="#E91E63"
+        android:textColor="@color/text_ligth_blue"
         android:textColorHint="#009688"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -52,7 +52,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="24dp"
         android:hint="E-mail"
-        android:textColor="#F44336"
+        android:textColor="#4CAF50"
         android:textColorHint="#4CAF50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,6 +115,17 @@
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputCpf" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Inserir Evento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.874"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEditarFoto" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

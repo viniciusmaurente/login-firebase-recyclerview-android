@@ -93,7 +93,7 @@ public class EventoActivity extends AppCompatActivity {
                         DataRef.child(key).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 // Toast.makeText(EventoActivity.this, "Sucesso ao salvar o Evento", Toast.LENGTH_SHORT).show();
 
                             }

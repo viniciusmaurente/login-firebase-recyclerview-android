@@ -31,6 +31,7 @@ public class PerfilFragment extends Fragment {
 
 
     private Button buttonEditarPerfil;
+    private Button btnInserirEvento;
     private ImageView imagePerfil;
     private Usuario usuarioLogado;
     private TextView textNomePerfil;
@@ -76,6 +77,14 @@ public class PerfilFragment extends Fragment {
             }
         });
 
+        btnInserirEvento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), EventoActivity.class);
+                startActivity(i);
+            }
+        });
+
         return view;
     }
 
@@ -91,6 +100,7 @@ public class PerfilFragment extends Fragment {
 
     public void inicializarComponentes(View view){
         imagePerfil         = view.findViewById(R.id.imagePerfil);
+        btnInserirEvento    = view.findViewById(R.id.btnInserirEvento);
         buttonEditarPerfil  = view.findViewById(R.id.buttonEditarPerfil);
         textNomePerfil      = view.findViewById(R.id.textNomePerfil);
         textEmailPerfil     = view.findViewById(R.id.textEmailPerfil);

@@ -33,9 +33,9 @@
         android:layout_width="133dp"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="230dp"
         android:hint="Nome"
-        android:textColor="#E91E63"
+        android:textColor="@color/text_ligth_blue"
         android:textColorHint="#009688"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -62,7 +62,7 @@
         android:layout_width="133dp"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="392dp"
+        android:layout_marginTop="328dp"
         android:hint="CPF"
         android:textColor="#E91E63"
         android:textColorHint="#F4F4F4"
@@ -81,11 +81,23 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:hint="E-mail"
-        android:textColor="#F44336"
+        android:textColor="#4CAF50"
         android:textColorHint="#4CAF50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textNomePerfil" />
+
+    <Button
+        android:id="@+id/btnInserirEvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Inserir Evento"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEditarPerfil" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
