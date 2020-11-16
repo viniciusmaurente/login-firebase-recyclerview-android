@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.br.desafio4all.R;
 
 import com.br.desafio4all.activity.EditarPerfilActivity;
+import com.br.desafio4all.activity.EventoActivity;
 import com.br.desafio4all.model.Usuario;
 import com.br.desafio4all.util.UsuarioFirebase;
 import com.bumptech.glide.Glide;

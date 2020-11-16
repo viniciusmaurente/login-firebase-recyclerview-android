@@ -1,14 +1,21 @@
 package com.br.desafio4all.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.br.desafio4all.R;
+import com.br.desafio4all.activity.EventoActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,13 +55,33 @@ public class EventosFragment extends Fragment {
         return fragment;
     }
 
+    EditText inputSearch;
+    RecyclerView recyclerView;
+    FloatingActionButton floatingBtn;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+            inputSearch     = inputSearch.findViewById(R.id.inputSearch);
+            recyclerView    = recyclerView.findViewById(R.id.recyclerView);
+            floatingBtn     = floatingBtn.findViewById(R.id.floatingBtn);
+            //recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            recyclerView.setHasFixedSize(true);
+            floatingBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(), EventoActivity.class));
+                }
+            });
         }
+    }
+
+    private Context getApplicationContext() {
+        return null;
     }
 
     @Override
