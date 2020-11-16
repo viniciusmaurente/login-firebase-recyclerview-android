@@ -30,10 +30,11 @@
 
     <TextView
         android:id="@+id/textNomePerfil"
-        android:layout_width="133dp"
-        android:layout_height="48dp"
+        android:layout_width="356dp"
+        android:layout_height="50dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="250dp"
+        android:layout_marginEnd="24dp"
         android:hint="Nome"
         android:textColor="@color/text_ligth_blue"
         android:textColorHint="#009688"

@@ -85,7 +85,7 @@ public class EventosActivity extends AppCompatActivity {
                         hashMap.put("NomeEvento", imageName);
                         hashMap.put("ImageUrl", uri.toString());
 
-                        finish();
+
 
                         DataRef.child(key).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -95,7 +95,7 @@ public class EventosActivity extends AppCompatActivity {
 
                             }
                         });
-
+                        finish();
                     }
                 });
 
