@@ -26,7 +26,8 @@
         android:paddingBottom="8dp"
         android:textColor="@color/material_on_primary_disabled"
         android:textColorHighlight="#C1C1C1"
-        android:textColorHint="#C1C1C1" />
+        android:textColorHint="#C1C1C1"
+        android:textCursorDrawable="@android:color/holo_blue_dark" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

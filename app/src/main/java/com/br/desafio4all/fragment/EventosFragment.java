@@ -47,12 +47,33 @@ public class EventosFragment extends Fragment {
 
         usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
 
+
         inicializarComponentes(view);
 
-        FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();
+        FirebaseUser usuarioLogado = UsuarioFirebase.getUsuarioAtual();
         inputSearch     = inputSearch.findViewById(R.id.inputSearch);
         recyclerView    = recyclerView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        options = new FirebaseRecyclerOptions.Builder<Evento>().setQuery(DataRef, Evento.class).build();
+        adapter = new FirebaseRecyclerAdapter<Evento, MyViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Evento model) {
+                holder.textView.setText(model.getEventoNome());
+
+                Picasso.get().load(model.getImageUrl()).into(holder.imageView);
+
+            }
+
+            @NonNull
+            @Override
+            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_eventos,parent, false);
+
+                return new MyViewHolder(v);
+            }
+        };
 
         return view;
     }
@@ -70,24 +91,7 @@ public class EventosFragment extends Fragment {
     }
 
     private void LoadData() {
-        options = new FirebaseRecyclerOptions.Builder<Evento>().setQuery(DataRef, Evento.class).build();
-        adapter = new FirebaseRecyclerAdapter<Evento, MyViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Evento model) {
-                holder.textView.setText(model.getEventoNome());
-                Picasso.get().load(model.getImageUrl()).into(holder.imageView);
 
-            }
-
-            @NonNull
-            @Override
-            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.detalhes_evento,parent, false);
-
-                return new MyViewHolder(v);
-            }
-        };
         adapter.startListening();
         recyclerView.setAdapter(adapter);
 
