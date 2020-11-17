@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.br.desafio4all.R;
@@ -37,6 +35,7 @@ public class PerfilFragment extends Fragment {
     private TextView textNomePerfil;
     private TextView textEmailPerfil;
     private TextInputLayout textInputCpf;
+
 
     public PerfilFragment() {
         // Required empty public constructor
@@ -102,7 +101,7 @@ public class PerfilFragment extends Fragment {
         imagePerfil         = view.findViewById(R.id.imagePerfil);
         btnInserirEvento    = view.findViewById(R.id.btnInserirEvento);
         buttonEditarPerfil  = view.findViewById(R.id.buttonEditarPerfil);
-        textNomePerfil      = view.findViewById(R.id.textNomePerfil);
+        textNomePerfil      = view.findViewById(R.id.textNomePerfil5);
         textEmailPerfil     = view.findViewById(R.id.textEmailPerfil);
         textInputCpf        = view.findViewById(R.id.textInputCpf);
 

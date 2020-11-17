@@ -18,42 +18,54 @@ import com.br.desafio4all.R;
 import com.br.desafio4all.activity.EditarPerfilActivity;
 import com.br.desafio4all.activity.EventoActivity;
 import com.br.desafio4all.model.Evento;
+import com.br.desafio4all.model.Usuario;
+import com.br.desafio4all.util.UsuarioFirebase;
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
 
 public class EventosFragment extends Fragment {
 
-    EditText inputSearch;
-    RecyclerView recyclerView;
-    FloatingActionButton floatingBtn;
-    FirebaseRecyclerOptions<Evento> options;
-    FirebaseRecyclerAdapter<Evento, MyViewHolder> adapter;
-    DatabaseReference DataRef;
+    private EditText inputSearch;
+    private RecyclerView recyclerView;
+    private FloatingActionButton floatingBtn;
+    private FirebaseRecyclerOptions<Evento> options;
+    private FirebaseRecyclerAdapter<Evento, MyViewHolder> adapter;
+    private DatabaseReference DataRef;
+    private Usuario usuarioLogado;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_eventos, container, false);
+
+        usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+
+        inicializarComponentes(view);
+
+        FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();
+        inputSearch     = inputSearch.findViewById(R.id.inputSearch);
+        recyclerView    = recyclerView.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        return view;
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 
-            inputSearch     = inputSearch.findViewById(R.id.inputSearch);
-            recyclerView    = recyclerView.findViewById(R.id.recyclerView);
-            floatingBtn     = floatingBtn.findViewById(R.id.floatingBtn);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
             LoadData();
 
-            floatingBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(getActivity(), EditarPerfilActivity.class);
-                    startActivity(i);
-                }
-
-            });
         }
     }
 
@@ -63,7 +75,6 @@ public class EventosFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Evento model) {
                 holder.textView.setText(model.getEventoNome());
-
                 Picasso.get().load(model.getImageUrl()).into(holder.imageView);
 
             }
@@ -82,16 +93,16 @@ public class EventosFragment extends Fragment {
 
 
     }
+    private void inicializarComponentes(View view) {
+        inputSearch     = view.findViewById(R.id.inputSearch);
+        recyclerView    = view.findViewById(R.id.recyclerView);
+
+
+    }
 
 
     private Context getApplicationContext() {
         return null;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_eventos, container, false);
-    }
 }

@@ -90,4 +90,11 @@ public class UsuarioFirebase {
         }
         return usuario;
     }
+
+    public static void atualizarCpfUsuario(String cpfAtualizado) {
+        FirebaseUser firebaseUser = getUsuarioAtual();
+        Usuario usuario = new Usuario();
+        usuario.setCpf(firebaseUser.getPhoneNumber());
+
+    }
 }

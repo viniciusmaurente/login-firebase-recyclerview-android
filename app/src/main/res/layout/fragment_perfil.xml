@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textNomePerfil"
+        android:id="@+id/textNomePerfil5"
         android:layout_width="349dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
@@ -87,7 +87,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNomePerfil" />
+        app:layout_constraintTop_toBottomOf="@+id/textNomePerfil5" />
 
     <Button
         android:id="@+id/btnInserirEvento"

@@ -3,7 +3,6 @@ package com.br.desafio4all.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,17 +31,15 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.util.concurrent.ExecutionException;
 
 public class EditarPerfilActivity extends AppCompatActivity {
 
     private ImageView imagePerfil;
     private TextView buttonSalvar;
-    private TextView textNomePerfil;
+    private EditText textNomePerfil;
     private TextView textEmailPerfil;
-    private TextInputLayout textInputCpf;
+    private EditText textInputCpf;
     private Button buttonEditarFoto;
-    private Button btnInserirEvento;
     private Usuario usuarioLogado;
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageRef;
@@ -64,7 +62,9 @@ public class EditarPerfilActivity extends AppCompatActivity {
         //Recuperar dados do usuário
         FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();
         textNomePerfil.setText( usuarioPerfil.getDisplayName() );
+        textInputCpf.setText(usuarioPerfil.getPhoneNumber());
         textEmailPerfil.setText( usuarioPerfil.getEmail() );
+
 
 
         Uri url = usuarioPerfil.getPhotoUrl();
@@ -82,11 +82,16 @@ public class EditarPerfilActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String nomeAtualizado = textNomePerfil.getText().toString();
+                String cpfAtualizado = textInputCpf.getText().toString();
 
                 //Atualizar nome no Perfil
                 UsuarioFirebase.atualizarNomeUsuario(nomeAtualizado);
+                UsuarioFirebase.atualizarCpfUsuario(cpfAtualizado);
+                usuarioLogado.setCpf(cpfAtualizado);
                 usuarioLogado.setNome(nomeAtualizado);
                 usuarioLogado.atualizar();
+
+
                 finish();
 
                 Toast.makeText(EditarPerfilActivity.this,
@@ -164,12 +169,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
                                     atualizarFotousuario(url);
                                 }
                             });
-
-                            finish();
-
-                            Toast.makeText(EditarPerfilActivity.this,
-                                    "Sucesso ao fazer upload da imagem!",
-                                    Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -191,6 +190,18 @@ public class EditarPerfilActivity extends AppCompatActivity {
         Toast.makeText(EditarPerfilActivity.this,
                 "Sua foto foi atualizada!",
                 Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    private void atualizarCpfUsuario(String string){
+        //atualizar foto no perfil
+        UsuarioFirebase.getUsuarioAtual();
+
+        //atualizar foto no firebase
+        usuarioLogado.setCpf(string);
+        usuarioLogado.atualizar();
+
         finish();
 
     }
