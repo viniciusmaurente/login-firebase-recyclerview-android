@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Desafio4all">
-        <activity android:name=".activity.EventosActivity"></activity>
-        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.ViewActivity"></activity>
+        <activity android:name=".activity.HomeActivity" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".activity.EventoActivity" />
         <activity android:name=".activity.EditarPerfilActivity" />
         <activity android:name=".activity.CadastroActivity" />
@@ -25,5 +25,7 @@
             android:name=".activity.MainActivity"
             android:windowSoftInputMode="stateHidden" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

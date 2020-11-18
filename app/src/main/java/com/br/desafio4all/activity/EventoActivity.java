@@ -3,24 +3,32 @@ package com.br.desafio4all.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.br.desafio4all.R;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.core.Context;
+import com.google.firebase.events.Event;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -29,27 +37,28 @@ public class EventoActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_IMAGE = 101;
     private ImageView imageViewAdd;
     private EditText inputImageName;
-    private EditText inputDescricao;
+    private EditText inputImageDesc;
     private Button btnUpload;
 
+    private RecyclerView mEventList;
     DatabaseReference DataRef;
-    StorageReference StorageRef;
+    StorageReference  StorageRef;
 
     Uri imageUri;
     boolean isImageAdded = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento);
 
-        imageViewAdd    = findViewById(R.id.imageViewAdd);
-        inputImageName  = findViewById(R.id.inputImageName);
-        inputDescricao  = findViewById(R.id.inputDescricao);
-        btnUpload       = findViewById(R.id.btnUpload);
+        imageViewAdd    =   findViewById(R.id.imageViewAdd);
+        inputImageName  =   findViewById(R.id.inputImageName);
+        btnUpload       =   findViewById(R.id.btnUpload);
 
-        DataRef = FirebaseDatabase.getInstance().getReference().child("Evento");
-        StorageRef = FirebaseStorage.getInstance().getReference().child("EventoImage");
-
+        //cria estrutura banco de dados
+        DataRef     = FirebaseDatabase.getInstance().getReference().child("Evento");
+        StorageRef  = FirebaseStorage.getInstance().getReference().child("EventsImage");
         imageViewAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,8 +73,7 @@ public class EventoActivity extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String imageName      = inputImageName.getText().toString();
-
+                final String imageName = inputImageName.getText().toString();
                 if (isImageAdded != false && imageName != null){
                     uploadImage(imageName);
                 }
@@ -74,9 +82,11 @@ public class EventoActivity extends AppCompatActivity {
 
     }
 
-    private void uploadImage(final String imageName) {
 
-        final String key = DataRef.push().getKey();
+
+    private void uploadImage( String imageName) {
+
+        final String key  = DataRef.push().getKey();
         StorageRef.child(key + ".jpg").putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -85,27 +95,21 @@ public class EventoActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         HashMap hashMap = new HashMap();
-                        hashMap.put("NomeEvento", imageName);
+                        hashMap.put("EventName", imageName);
                         hashMap.put("ImageUrl", uri.toString());
 
-                        finish();
-
                         DataRef.child(key).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+
                             @Override
                             public void onSuccess(Void aVoid) {
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                // Toast.makeText(EventoActivity.this, "Sucesso ao salvar o Evento", Toast.LENGTH_SHORT).show();
-
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                // Toast.makeText(MainActivity.this, "Download realizado com sucesso!", Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
                 });
-
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
 
             }
         });
@@ -116,10 +120,12 @@ public class EventoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_IMAGE && data != null){
-            imageUri = data.getData();
-            isImageAdded = true;
+
+            imageUri        =   data.getData();
+            isImageAdded    =   true;
             imageViewAdd.setImageURI(imageUri);
 
         }
+
     }
 }

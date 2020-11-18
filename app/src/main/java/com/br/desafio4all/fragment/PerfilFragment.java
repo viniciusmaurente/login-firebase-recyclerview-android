@@ -21,7 +21,6 @@ import com.br.desafio4all.activity.EventoActivity;
 import com.br.desafio4all.model.Usuario;
 import com.br.desafio4all.util.UsuarioFirebase;
 import com.bumptech.glide.Glide;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -34,7 +33,7 @@ public class PerfilFragment extends Fragment {
     private Usuario usuarioLogado;
     private TextView textNomePerfil;
     private TextView textEmailPerfil;
-    private TextInputLayout textInputCpf;
+    private TextView textInputCpf;
 
 
     public PerfilFragment() {
@@ -57,6 +56,7 @@ public class PerfilFragment extends Fragment {
         FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();
         textNomePerfil.setText( usuarioPerfil.getDisplayName() );
         textEmailPerfil.setText( usuarioPerfil.getEmail() );
+
 
         String caminhoFoto = usuarioLogado.getCaminhoFoto();
         if (caminhoFoto != null){

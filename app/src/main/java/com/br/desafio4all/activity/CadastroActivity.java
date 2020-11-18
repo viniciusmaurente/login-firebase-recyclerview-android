@@ -28,9 +28,9 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText campoNome, campoEmail, campoSenha;
     private Button botaoCadastrar;
     private ProgressBar progressBar;
+    private EditText campoCpf;
 
     private Usuario usuario;
-
     private FirebaseAuth autenticacao;
 
     @Override
@@ -49,17 +49,16 @@ public class CadastroActivity extends AppCompatActivity {
                 String textoNome  = campoNome.getText().toString();
                 String textoEmail = campoEmail.getText().toString();
                 String textosenha = campoSenha.getText().toString();
+                String textoCpf = campoCpf.getText().toString();
 
                 if( !textoNome.isEmpty() ){
                     if( !textoEmail.isEmpty() ){
                         if( !textosenha.isEmpty() ){
-
                             usuario = new Usuario();
                             usuario.setNome( textoNome );
                             usuario.setEmail( textoEmail );
                             usuario.setSenha( textosenha );
                             cadastrar( usuario );
-
                         }else{
                             Toast.makeText(CadastroActivity.this,
                                     "Preencha a senha!",
@@ -75,14 +74,9 @@ public class CadastroActivity extends AppCompatActivity {
                             "Preencha o nome!",
                             Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
-
-
     }
-
     /**
      * Método responsável por cadastrar usuário com e-mail e senha
      * e fazer validações ao fazer o cadastro

@@ -62,10 +62,8 @@ public class EditarPerfilActivity extends AppCompatActivity {
         //Recuperar dados do usuário
         FirebaseUser usuarioPerfil = UsuarioFirebase.getUsuarioAtual();
         textNomePerfil.setText( usuarioPerfil.getDisplayName() );
-        textInputCpf.setText(usuarioPerfil.getPhoneNumber());
+        textInputCpf.setText(usuarioPerfil.getTenantId());
         textEmailPerfil.setText( usuarioPerfil.getEmail() );
-
-
 
         Uri url = usuarioPerfil.getPhotoUrl();
         if (url != null){
@@ -167,6 +165,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     Uri url = task.getResult();
                                     atualizarFotousuario(url);
+
                                 }
                             });
                         }
@@ -195,14 +194,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     private void atualizarCpfUsuario(String string){
-        //atualizar foto no perfil
+        //atualizar cpf no perfil
         UsuarioFirebase.getUsuarioAtual();
 
-        //atualizar foto no firebase
-        usuarioLogado.setCpf(string);
+        //atualizar cpf no firebase
+        usuarioLogado.setCpf(textInputCpf.toString());
         usuarioLogado.atualizar();
-
-        finish();
 
     }
 

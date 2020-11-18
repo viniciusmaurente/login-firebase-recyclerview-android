@@ -1,5 +1,6 @@
 package com.br.desafio4all.activity;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.br.desafio4all.R;
-import com.br.desafio4all.adapter.ViewPagerAdapter;
 import com.br.desafio4all.fragment.EventosFragment;
 import com.br.desafio4all.fragment.PerfilFragment;
 import com.br.desafio4all.util.ConfiguracaoFirebase;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);
         }
-        
+
         public void addFragment(Fragment fragment, String title){
             fragments.add(fragment);
             fragmentTitle.add(title);

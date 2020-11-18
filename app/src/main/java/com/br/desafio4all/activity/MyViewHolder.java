@@ -1,4 +1,4 @@
-package com.br.desafio4all.fragment;
+package com.br.desafio4all.activity;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -13,14 +13,15 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
     ImageView imageView;
     TextView textView;
+    View v;
 
 
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        imageView   = itemView.findViewById(R.id.image_detalhe_evento);
-        textView    = itemView.findViewById(R.id.textView_single_view);
-
+        imageView   = itemView.findViewById(R.id.image_single_view);
+        textView    = itemView.findViewById(R.id.textView_single_title);
+        v = itemView;
 
     }
 }
